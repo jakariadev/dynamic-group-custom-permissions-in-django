@@ -105,10 +105,61 @@ class AboutPageView(TemplateView):
     template_name = 'about.html'
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+## --------------- Shell Commands group, permission, user -------------------
+
 #from django.contrib.auth.models import Group, ContentType, Permission
 # ct = ContentType.objects.get_for_model(PremiumProduct)
 # permission = Permission.objects.create(codename="can_do_this", contentype = ct)
 
-# ----------------------------------
+##----------------------------------
 # cc = ContentType.objects.get_for_model(Books)
 # Permission.objects.get(codename='canedittitle', content_type=cc)
+
+
+
+##-----create a group and assign permissions to the group with loop ---------
+# from django.contrib.auth.models import Permission, ContentType
+# content_type = ContentType.objects.get(app_label='app1', model='books') # small letter model name
+# #get all permssions for this model
+# perms = Permission.objects.filter(content_type=content_type)
+# group = Group.objects.get(name='new_group')
+# group, created = Group.objects.get_or_create(name='new_group')
+# for p in perms:
+#     group.permissions.add(p)
+
+
+
+##---------- get specific permissions ----------
+# perm_change = Permission.objects.get(codename='canedittitle')
+# group.permissions.add(perm_change)
+
+
+
+##------------- add users in a group ------------
+## from django.contrib.auth.models import Group, User
+# g = Group.objects.get(name='new_group')
+# users = User.objects.all()
+# for u in users:
+#     g.user_set.add(u)
+
+
+
+## --------- add a specific user --------------
+# u = User.objects.get(username='editor2')
+# group.user_set.add(u)
+
+
+
