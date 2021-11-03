@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Book Edit page  {% endblock title %}
+{% block content %}
+
+<h1>Books edit in  classbased View </h1>
+<div class="row">
+
+<div class="col-md-12">
+    <div class="card p-5">
+        <form action="" method="post">{% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Update">
+        </form>
+{% for i in booklists %}
+        titeledite: {{i.title}} <br>
+        {% endfor %}
+    </div>
+
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+{% block title %}Book Details  {% endblock title %}
+{% block content %}
+
+<h1>Books detail in  classbased View </h1>
+<div class="row">
+
+<div class="col-md-6">
+    <div class="card my-2">
+        <div class="card-header"><h2 title="{{bookdetails.title}}">{{bookdetails.title}} </h2></div>
+        <div class="card-body">
+            <p class="text-info">Author: {{bookdetails.author_name|truncatechars:40}}</p>
+            <p>Page-no: {{ bookdetails.pageno }}</p>
+            <p>Created at: {{ bookdetails.created_at }}</p>
+            <p>Updated at: {{ bookdetails.updated_at }}</p>
+        </div>
+    </div>
+    <a href="{% url 'book_edit' bookdetails.pk %}">+ EditBook</a>
+
+    </div>
+</div>
+{% endblock content %}
