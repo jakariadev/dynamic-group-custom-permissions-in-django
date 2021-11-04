@@ -10,6 +10,7 @@ pip = "*"
 install = "*"
 django-extensions = "*"
 django-material-admin = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
