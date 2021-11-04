@@ -9,6 +9,7 @@ django-crispy-forms = "*"
 pip = "*"
 install = "*"
 django-extensions = "*"
+django-material-admin = "*"
 
 [dev-packages]
 

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "1bf6059b09a68fce72de0d773a8a7bc6454a2a7555f9761463267fafd93bc188"
+            "sha256": "629b510108cdee2142b946aaa6616bdfe24f6c12bbfdf71b1e09bd09c1648ff3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -47,6 +47,14 @@
             ],
             "index": "pypi",
             "version": "==3.1.3"
+        },
+        "django-material-admin": {
+            "hashes": [
+                "sha256:08cd52c3a88270a2e26b28678bb5ed5e3c912f87d24fab8745410e39e5efcff8",
+                "sha256:4f967078ced36008a7bc05946c5cabe9ccb85d02687cced9bac284b4fa977fc3"
+            ],
+            "index": "pypi",
+            "version": "==1.8.5"
         },
         "install": {
             "hashes": [

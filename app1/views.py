@@ -1,10 +1,11 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import Group, Permission, User
 from django.contrib.auth.models import Group, ContentType, Permission
 from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import permission_required
 from django.views.generic import TemplateView
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from .models import Books
 from django.views.generic import ListView, UpdateView, DetailView
 from django.views.generic.edit import CreateView
@@ -39,21 +40,21 @@ class BookIndiviView(PermissionRequiredMixin, DetailView):
     permission_required = "app1.view_books"
 
 
-class BookUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Books
-    template_name = 'book_edit.html'
-    # context_object_name = 'book-edit'
-    # if using PermissionRequiredMixin
-    # fields = ['title']
-    # fields = ['title', 'author_name', 'pageno']
-    def test_func(self):  # new
-        obj = self.get_object()
-        return obj.author_name == self.request.user
+# class BookUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateView):
+#     model = Books
+#     template_name = 'book_edit.html'
+#     # context_object_name = 'book-edit'
+#     # if using PermissionRequiredMixin
+#     # fields = ['title']
+#     # fields = ['title', 'author_name', 'pageno']
+#     def test_func(self):  # new
+#         obj = self.get_object()
+#         return obj.author_name == self.request.user
 
-    permission_required = "app1.canedittitle"
+#     permission_required = "app1.canedittitle"
 
-    if permission_required:
-        fields = ['title', 'author_name', 'pageno']
+#     if permission_required:
+#         fields = ['title', 'author_name', 'pageno']
 
     # permission_required2 = "app1.change_books"
     # if permission_required and not permission_required2:
@@ -65,23 +66,37 @@ class BookUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateView):
 
 # related to permissions
 # @permission_required('app1.change_books')
-# def BookUpdateView(request, pk):
-#     cc = ContentType.objects.get_for_model(Books)
-#     # if request.user.Permission.objects.filter(codename='canedittitle', content_type=cc) !=None:
+
+
+def BookUpdateView(request, pk):
+    # cc = ContentType.objects.get_for_model(Books)
+    # if request.user.Permission.objects.filter(codename='canedittitle', content_type=cc) !=None:
     
-#     # user M2M permission
-#     # Permission <-----> User
+    # user M2M permission
+    # Permission <-----> User
 
 
-#     # per = Permission.objects.filter(codename='canedittitle', content_type=cc)
-#     # if per:
-#     # if request.user.permission.filter(codename="app1.canedttitile_books", contentype=ct).exists():
+    # per = Permission.objects.filter(codename='canedittitle', content_type=cc)
+    # if per:
+    # if request.user.permission.filter(codename="app1.canedttitile_books", contentype=ct).exists():
 
-#     if request.user.has_perm('app1.canedittitle'):
-#         booklists = Books.objects.all()
-#         return render(request, "book_edit.html", {"booklists": booklists})
-#     else:
-#         return HttpResponse("Not allowed")
+    if request.user.has_perm('app1.canedittitle'):
+        booklists = Books.objects.all()
+        try:
+            book = Books.objects.get(id=pk)
+        except:
+            raise Http404
+
+        if book.author_name == request.user:
+            # do something
+            
+            print(book)
+            print("okkkkkkk")
+            print(booklists.filter(author_name=request.user))
+
+        return render(request, "book_edit.html", {"booklists": booklists})
+    else:
+        return HttpResponse("Not allowed")
 
 
 
